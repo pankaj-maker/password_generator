@@ -1,4 +1,4 @@
-import { useState, useCallback,useEffect } from "react";
+import { useState, useCallback, useEffect } from "react";
 
 function App() {
   const [length, setLength] = useState(6);
@@ -21,55 +21,75 @@ function App() {
     setInput(password);
   }, [length, number, character]);
 
-useEffect(() => {
-  passwordGenerator();
-}, [passwordGenerator, length, number, character]);
+  useEffect(() => {
+    passwordGenerator();
+  }, [passwordGenerator, length, number, character]);
 
   const handleLengthChange = (e) => {
     setLength(e.target.value);
   };
 
   return (
-    <div className="w-full max-w-md mx-auto shadow-md rounded-lg px-4 py-3 my-8 bg-slate-600 text-black ">
-      <h1 className="text-4xl text-center ">Password generator</h1>
-      <div className="flex shadow rounded-lg mb-4 overflow-hidden mt-3">
-        <input
-          type="text"
-          value={input}
-          placeholder="password"
-          className="outline-none w-full py-1 px-3"
-        />
-      </div>
-      <div className="flex text-sm gap-x-2">
-        <div className="flex items-center gap-x-1">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500">
+      <div className="w-full max-w-md mx-auto shadow-2xl rounded-xl px-6 py-8 bg-white/90 backdrop-blur-md text-gray-800">
+        <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">
+          Password Generator
+        </h1>
+        <div className="flex items-center shadow-sm rounded-lg mb-6 overflow-hidden bg-white/80">
           <input
-            type="range"
-            min={6}
-            max={20}
-            value={length}
-            onChange={handleLengthChange}
-            className="cursor-pointer"
+            type="text"
+            value={input}
+            placeholder="Generated Password"
+            readOnly
+            className="outline-none w-full py-2 px-4 text-gray-700 font-medium bg-transparent"
           />
-          <label>Lenght: {length}</label>
         </div>
-        <div className="flex items-center gap-x-1">
-          <input
-            type="checkbox"
-            checked={number}
-            onChange={() => setNumber(!number)}
-            className="cursor-pointer"
-          />
-          <label>Numbers</label>
+        <div className="space-y-4">
+          {/* Length Range */}
+          <div className="flex items-center justify-between">
+            <label className="font-medium text-gray-700">Length: {length}</label>
+            <input
+              type="range"
+              min={6}
+              max={20}
+              value={length}
+              onChange={handleLengthChange}
+              className="cursor-pointer accent-purple-500"
+            />
+          </div>
+
+          {/* Numbers Checkbox */}
+          <div className="flex items-center gap-3">
+            <input
+              type="checkbox"
+              checked={number}
+              onChange={() => setNumber(!number)}
+              className="w-5 h-5 cursor-pointer accent-indigo-500"
+            />
+            <label className="text-gray-700 font-medium">Include Numbers</label>
+          </div>
+
+          {/* Characters Checkbox */}
+          <div className="flex items-center gap-3">
+            <input
+              type="checkbox"
+              checked={character}
+              onChange={() => setCharacter(!character)}
+              className="w-5 h-5 cursor-pointer accent-pink-500"
+            />
+            <label className="text-gray-700 font-medium">
+              Include Special Characters
+            </label>
+          </div>
         </div>
-        <div>
-          <input
-            type="checkbox"
-            checked={character}
-            onChange={() => setCharacter(!character)}
-            className="cursor-pointer"
-          />
-          <label>Characters</label>
-        </div>
+
+        {/* Generate Password Button */}
+        <button
+          onClick={passwordGenerator}
+          className="w-full mt-6 py-2 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg shadow-md transition-all duration-200"
+        >
+          Generate Password
+        </button>
       </div>
     </div>
   );
